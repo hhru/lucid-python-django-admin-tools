@@ -1,4 +1,4 @@
-python-django-admin-tools (0.4.1) stable; urgency=low
+python-django-admin-tools (0.4.1) unstable; urgency=low
 
   * Static files and django 1.3 support
   * Fixed modules instanciation issues (fixes #65)
