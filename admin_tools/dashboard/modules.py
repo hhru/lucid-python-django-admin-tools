@@ -5,6 +5,7 @@ Module where admin tools dashboard modules classes are defined.
 from django.utils.text import capfirst
 from django.core.urlresolvers import reverse
 from django.contrib.contenttypes.models import ContentType
+from django.forms.util import flatatt
 from django.utils.translation import ugettext_lazy as _
 from django.utils.itercompat import is_iterable
 
@@ -306,7 +307,10 @@ class LinkList(DashboardModule):
         A string describing the link, it will be the ``title`` attribute of
         the html ``a`` tag.
 
-    Children can also be iterables (lists or tuples) of length 2, 3 or 4.
+    ``attrs``
+        Hash comprising attributes of the html ``a`` tag.
+
+    Children can also be iterables (lists or tuples) of length 2, 3, 4 or 5.
 
     Here's a small example of building a link list module::
 
@@ -324,6 +328,7 @@ class LinkList(DashboardModule):
                             'url': 'http://www.python.org',
                             'external': True,
                             'description': 'Python programming language rocks !',
+                            'attrs': {'target': '_blank'},
                         },
                         ['Django website', 'http://www.djangoproject.com', True],
                         ['Some internal link', '/some/internal/link/'],
@@ -350,9 +355,19 @@ class LinkList(DashboardModule):
                     link_dict['external'] = link[2]
                 if len(link) >= 4:
                     link_dict['description'] = link[3]
-                new_children.append(link_dict)
-            else:
-                new_children.append(link)
+                if len(link) >= 5:
+                    link_dict['attrs'] = link[4]
+                link = link_dict
+            if 'attrs' not in link:
+                link['attrs'] = {}
+            link['attrs']['href'] = link['url']
+            if link.get('description', ''):
+                link['attrs']['title'] = link['description']
+            if link.get('external', False):
+                link['attrs']['class'] = ' '.join(['external-link']
+                    + link['attrs'].get('class', '').split(' ')).strip()
+            link['attrs'] = flatatt(link['attrs'])
+            new_children.append(link)
         self.children = new_children
         self._initialized = True
 
@@ -502,6 +517,10 @@ class ModelList(DashboardModule, AppListElementMixin):
         self.exclude = list(exclude or [])
         self.include_list = kwargs.pop('include_list', []) # deprecated
         self.exclude_list = kwargs.pop('exclude_list', []) # deprecated
+        if 'extra' in kwargs:
+            self.extra = kwargs.pop('extra')
+        else:
+            self.extra = []
         super(ModelList, self).__init__(title, **kwargs)
 
     def init_with_context(self, context):
@@ -518,6 +537,16 @@ class ModelList(DashboardModule, AppListElementMixin):
             if perms['add']:
                 model_dict['add_url'] = self._get_admin_add_url(model, context)
             self.children.append(model_dict)
+        if self.extra:
+            # TODO - permissions support
+            for extra_url in self.extra:
+                model_dict = {}
+                model_dict['title'] = extra_url['title']
+                model_dict['change_url'] = extra_url['change_url']
+                model_dict['add_url'] = extra_url.get('add_url', None)
+                self.children.append(model_dict)
+
+
         self._initialized = True
 
 
@@ -696,3 +725,4 @@ class Feed(DashboardModule):
                 pass
             self.children.append(entry)
         self._initialized = True
+

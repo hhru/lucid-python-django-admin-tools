@@ -12,19 +12,14 @@ class Migration(SchemaMigration):
 
     def forwards(self, orm):
         
-        # Adding model 'DashboardPreferences'
-        db.create_table('admin_tools_dashboard_preferences', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('user', self.gf('django.db.models.fields.related.ForeignKey')(to=orm[user_model])),
-            ('data', self.gf('django.db.models.fields.TextField')()),
-        ))
-        db.send_create_signal('dashboard', ['DashboardPreferences'])
+        # Adding unique constraint on 'DashboardPreferences', fields ['dashboard_id', 'user']
+        db.create_unique('admin_tools_dashboard_preferences', ['dashboard_id', 'user_id'])
 
 
     def backwards(self, orm):
         
-        # Deleting model 'DashboardPreferences'
-        db.delete_table('admin_tools_dashboard_preferences')
+        # Removing unique constraint on 'DashboardPreferences', fields ['dashboard_id', 'user']
+        db.delete_unique('admin_tools_dashboard_preferences', ['dashboard_id', 'user_id'])
 
 
     models = {
@@ -65,7 +60,8 @@ class Migration(SchemaMigration):
             'name': ('django.db.models.fields.CharField', [], {'max_length': '100'})
         },
         'dashboard.dashboardpreferences': {
-            'Meta': {'ordering': "('user',)", 'object_name': 'DashboardPreferences', 'db_table': "'admin_tools_dashboard_preferences'"},
+            'Meta': {'ordering': "('user',)", 'unique_together': "(('user', 'dashboard_id'),)", 'object_name': 'DashboardPreferences', 'db_table': "'admin_tools_dashboard_preferences'"},
+            'dashboard_id': ('django.db.models.fields.CharField', [], {'max_length': '100'}),
             'data': ('django.db.models.fields.TextField', [], {}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'user': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['%s']" % user_model})

@@ -1,3 +1,11 @@
+python-django-admin-tools (0.5.1) unstable; urgency=low
+
+  * Compatibility with Django 1.4 and Django 1.5
+  * Upgraded to latest jQuery / jQuery-ui
+  * Many bug fixes and small improvements
+
+ -- Andrey Terenkov <andrey.terenkov@gmail.com>  Wed, 10 Jul 2013 14:14:23 +0400
+
 python-django-admin-tools (0.4.2-hh1) unstable; urgency=low
 
   * Update some deprecated code for django-1.4 compatibility #EWD-151
