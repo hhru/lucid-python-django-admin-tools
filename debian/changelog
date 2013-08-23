@@ -4,7 +4,7 @@ python-django-admin-tools (0.5.1+hh1) unstable; urgency=low
   * Upgraded to latest jQuery / jQuery-ui
   * Many bug fixes and small improvements
 
-  -- Andrey Knyazev <knevcher@gmail.com>  Wed, 10 Jul 2013 14:14:23 +0400
+ -- Andrey Knyazev <knevcher@gmail.com>  Wed, 10 Jul 2013 14:14:23 +0400
 
 python-django-admin-tools (0.4.2-hh1) unstable; urgency=low
 
