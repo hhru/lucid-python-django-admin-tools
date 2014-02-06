@@ -12,7 +12,7 @@ long_desc = '''
 
 setup(
     name='django-admin-tools',
-    version=VERSION.replace(' ', '-'),
+    version='0.5.1+hh2',
     description='A collection of tools for the django administration interface',
     long_description=long_desc,
     author='David Jean Louis',
