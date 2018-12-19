@@ -32,7 +32,7 @@ def autodiscover(blacklist=[]):
     """
     import imp
     from django.conf import settings
-    from django.utils.importlib import import_module
+    from importlib import import_module
 
     blacklist.append('admin_tools.dashboard')
     blacklist.append('admin_tools.menu')

@@ -11,7 +11,7 @@ import math
 
 from django import template
 from django.db import IntegrityError
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 
 from admin_tools.utils import get_media_url, get_admin_site_name
 from admin_tools.dashboard.utils import get_dashboard

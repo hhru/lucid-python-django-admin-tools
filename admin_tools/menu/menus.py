@@ -2,7 +2,7 @@
 Module where admin tools menu classes are defined.
 """
 
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
 from admin_tools.menu import items
@@ -37,7 +37,7 @@ class Menu(object):
 
     Here's a concrete example of a custom menu::
 
-        from django.core.urlresolvers import reverse
+        from django.urls import reverse
         from admin_tools.menu import items, Menu
 
         class MyMenu(Menu):

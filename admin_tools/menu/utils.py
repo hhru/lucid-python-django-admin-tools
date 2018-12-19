@@ -5,8 +5,8 @@ Menu utilities.
 import types
 
 from django.conf import settings
-from django.utils.importlib import import_module
-from django.core.urlresolvers import reverse
+from importlib import import_module
+from django.urls import reverse
 
 
 def _get_menu_cls(menu_cls, context):

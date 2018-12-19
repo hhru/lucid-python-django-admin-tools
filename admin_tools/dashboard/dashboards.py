@@ -3,9 +3,9 @@ Module where admin tools dashboard classes are defined.
 """
 
 from django.template.defaultfilters import slugify
-from django.utils.importlib import import_module
+from importlib import import_module
 from django.utils.translation import ugettext_lazy as _
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.contrib.contenttypes.models import ContentType
 
 from admin_tools.dashboard import modules
@@ -44,7 +44,7 @@ class Dashboard(object):
 
     Here's an example of a custom dashboard::
 
-        from django.core.urlresolvers import reverse
+        from django.urls import reverse
         from django.utils.translation import ugettext_lazy as _
         from admin_tools.dashboard import modules, Dashboard
 
@@ -147,7 +147,7 @@ class AppIndexDashboard(Dashboard):
 
     Here's an example of a custom app index dashboard::
 
-        from django.core.urlresolvers import reverse
+        from django.urls import reverse
         from django.utils.translation import ugettext_lazy as _
         from admin_tools.dashboard import modules, AppIndexDashboard
 
